@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Task Management Dashboard</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Task Management</h1>
+    <div class="topbar-right">
+      <span>Welcome, {{ username }} (Manager)</span>
+      <a class="logout-btn" href="{{ url_for('logout') }}">Logout</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="form-card">
+      <h2>Assign / Update Task</h2>
+      <form id="task-form">
+        <label for="emp_id">Employee ID</label>
+        <input type="text" id="emp_id" name="emp_id" placeholder="e.g. E101" required>
+
+        <label for="employee_name">Employee Name</label>
+        <input type="text" id="employee_name" name="employee_name" placeholder="e.g. Ravi Kumar" required>
+
+        <label for="task_title">Task Title</label>
+        <select id="task_title" name="task_title" required>
+          <option value="" disabled selected>Select task</option>
+          <option value="Group Discussion">Group Discussion</option>
+          <option value="Meeting">Meeting</option>
+          <option value="Report Submission">Report Submission</option>
+        </select>
+
+        <label for="completed">Completed</label>
+        <select id="completed" name="completed" required>
+          <option value="" disabled selected>drop down v</option>
+          <option value="true">true</option>
+          <option value="false">false</option>
+        </select>
+
+        <button type="submit" id="submit-btn">Submit</button>
+        <span id="form-message"></span>
+      </form>
+    </section>
+
+    <section class="table-card">
+      <h2>All Tasks</h2>
+      <table id="tasks-table">
+        <thead>
+          <tr>
+            <th>Task ID</th>
+            <th>Emp ID</th>
+            <th>Employee Name</th>
+            <th>Task Title</th>
+            <th>Status</th>
+            <th>Toggle</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tasks-tbody">
+          <!-- filled by script.js -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

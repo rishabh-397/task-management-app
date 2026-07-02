@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 import mysql.connector
@@ -8,10 +9,11 @@ app = Flask(__name__)
 app.secret_key = "taskapp2026secret"
 
 db_config = {
-    "host": "localhost",
-    "user": "root",
-    "password": "@Rishu2005",
-    "database": "task_management_db",
+    "host": os.environ.get("DB_HOST", "localhost"),
+    "user": os.environ.get("DB_USER", "root"),
+    "password": os.environ.get("DB_PASSWORD", "your_mysql_password"),
+    "database": os.environ.get("DB_NAME", "task_management_db"),
+    "port": int(os.environ.get("DB_PORT", 3306)),
 }
 
 manager_username = "rishabh"
@@ -163,4 +165,5 @@ def delete_task(task_id):
 
 if __name__ == "__main__":
     setup_manager()
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)

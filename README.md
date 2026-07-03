@@ -50,7 +50,8 @@ task-management-app/
 │   ├── script.js
 │   └── images/
 ├── templates/
-│   └── index.html
+│   └── login.html
+    └── dashboard.html
 ├── app.py
 ├── requirements.txt
 ├── schema.sql

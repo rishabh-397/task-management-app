@@ -48,7 +48,7 @@ task-management-app/
 ├── static/
 │   ├── style.css
 │   ├── script.js
-│   └── images/
+│   
 ├── templates/
 │   └── login.html
     └── dashboard.html

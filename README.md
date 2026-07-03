@@ -170,7 +170,7 @@ The application is deployed on **Render**, while the MySQL database is hosted on
 
 GitHub: https://github.com/rishabh-397
 
-LinkedIn: https://www.linkedin.com/in/rishabh-chaturvedi
+LinkedIn: https://www.linkedin.com/in/rishabh-chaturvedi-21212728a?utm_source=share_via&utm_content=profile&utm_medium=member_android
 
 ## 📄 License
 

@@ -4,7 +4,10 @@ from flask import Flask, render_template, request, redirect, url_for, session, j
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 
-app = Flask(__name__)
+app = Flask(__name__,
+    template_folder='frontend/templates',
+    static_folder='frontend/static'
+)
 app.secret_key = "taskapp2026secret"
 
 manager_username = "rishabh"
@@ -17,7 +20,7 @@ def get_connection():
     return pymysql.connect(
         host=os.environ.get("DB_HOST", "localhost"),
         user=os.environ.get("DB_USER", "root"),
-        password=os.environ.get("DB_PASSWORD", "your_mysql_password"),
+        password=os.environ.get("DB_PASSWORD", "@Rishu2005"),
         database=os.environ.get("DB_NAME", "task_management_db"),
         port=int(os.environ.get("DB_PORT", "3306")),
         cursorclass=pymysql.cursors.DictCursor,

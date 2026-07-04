@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <title>Manager Login | Task Management</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body class="login-body">
-  <div class="login-card">
+
+  <!-- Stars background -->
+  <div class="stars" id="stars"></div>
+
+  <!-- Theme toggle -->
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
+
+  <div class="login-card animate-in">
     <h1>Task Management</h1>
     <p class="subtitle">Manager Login</p>
 
@@ -21,10 +28,39 @@
       <label for="password">Password</label>
       <input type="password" id="password" name="password" placeholder="Enter password" required>
 
-      <button type="submit">Login</button>
+      <button type="submit" class="login-btn">Login</button>
     </form>
 
     <p class="hint">Only a manager account can access this dashboard.</p>
   </div>
+
+  <script>
+    // Generate stars
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 150; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.width = Math.random() * 3 + 1 + 'px';
+      star.style.height = star.style.width;
+      star.style.animationDuration = Math.random() * 3 + 2 + 's';
+      star.style.animationDelay = Math.random() * 5 + 's';
+      starsContainer.appendChild(star);
+    }
+
+    // Theme toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      const btn = document.getElementById('themeBtn');
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.setAttribute('data-theme', 'light');
+        btn.textContent = '☀️ Light';
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        btn.textContent = '🌙 Dark';
+      }
+    }
+  </script>
 </body>
 </html>

@@ -152,4 +152,4 @@ User passwords are securely hashed using **Werkzeug** before being stored in the
 
 The application is deployed on **Railway**, with the MySQL database also hosted on **Railway**, ensuring seamless and reliable connectivity between the app and the database without any external connection issues.
 
-### Deployment Architecture write in more formal way d
+

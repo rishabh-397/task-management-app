@@ -15,14 +15,19 @@ valid_tasks = {"Group Discussion", "Meeting", "Report Submission"}
 
 
 def get_connection():
+    db_port = os.environ.get("DB_PORT", "3306")
+    try:
+        db_port = int(db_port)
+    except (ValueError, TypeError):
+        db_port = 3306
+    
     return mysql.connector.connect(
         host=os.environ.get("DB_HOST", "localhost"),
         user=os.environ.get("DB_USER", "root"),
         password=os.environ.get("DB_PASSWORD", "your_mysql_password"),
         database=os.environ.get("DB_NAME", "task_management_db"),
-        port=int(os.environ.get("DB_PORT", "3306")),
+        port=db_port,
     )
-
 
 def setup_manager():
     try:

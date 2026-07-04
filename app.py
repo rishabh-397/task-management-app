@@ -8,14 +8,6 @@ from functools import wraps
 app = Flask(__name__)
 app.secret_key = "taskapp2026secret"
 
-db_config = {
-    "host": os.environ.get("DB_HOST", "localhost"),
-    "user": os.environ.get("DB_USER", "root"),
-    "password": os.environ.get("DB_PASSWORD", "your_mysql_password"),
-    "database": os.environ.get("DB_NAME", "task_management_db"),
-    "port": int(os.environ.get("DB_PORT", 3306)),
-}
-
 manager_username = "rishabh"
 manager_password = "rishabh@2026"
 
@@ -23,22 +15,31 @@ valid_tasks = {"Group Discussion", "Meeting", "Report Submission"}
 
 
 def get_connection():
-    return mysql.connector.connect(**db_config)
+    return mysql.connector.connect(
+        host=os.environ.get("DB_HOST", "localhost"),
+        user=os.environ.get("DB_USER", "root"),
+        password=os.environ.get("DB_PASSWORD", "your_mysql_password"),
+        database=os.environ.get("DB_NAME", "task_management_db"),
+        port=int(os.environ.get("DB_PORT", "3306")),
+    )
 
 
 def setup_manager():
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT id FROM login WHERE username = %s", (manager_username,))
-    if cursor.fetchone() is None:
-        hashed = generate_password_hash(manager_password)
-        cursor.execute(
-            "INSERT INTO login (username, password, role) VALUES (%s, %s, %s)",
-            (manager_username, hashed, "manager"),
-        )
-        conn.commit()
-    cursor.close()
-    conn.close()
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id FROM login WHERE username = %s", (manager_username,))
+        if cursor.fetchone() is None:
+            hashed = generate_password_hash(manager_password)
+            cursor.execute(
+                "INSERT INTO login (username, password, role) VALUES (%s, %s, %s)",
+                (manager_username, hashed, "manager"),
+            )
+            conn.commit()
+        cursor.close()
+        conn.close()
+    except Exception as e:
+        print(f"setup_manager error: {e}")
 
 
 def login_required(f):
@@ -64,12 +65,15 @@ def login():
         username = request.form.get("username", "").strip()
         password = request.form.get("password", "")
 
-        conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM login WHERE username = %s", (username,))
-        user = cursor.fetchone()
-        cursor.close()
-        conn.close()
+        try:
+            conn = get_connection()
+            cursor = conn.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM login WHERE username = %s", (username,))
+            user = cursor.fetchone()
+            cursor.close()
+            conn.close()
+        except Exception as e:
+            return render_template("login.html", error=f"Database error: {e}")
 
         if user and user["role"] == "manager" and check_password_hash(user["password"], password):
             session["manager_id"] = user["id"]
@@ -98,13 +102,16 @@ def dashboard():
 @app.route("/api/tasks", methods=["GET"])
 @login_required
 def get_tasks():
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM task_management ORDER BY id DESC")
-    tasks = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return jsonify({"success": True, "tasks": tasks})
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM task_management ORDER BY id DESC")
+        tasks = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return jsonify({"success": True, "tasks": tasks})
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 500
 
 
 @app.route("/api/tasks", methods=["POST"])
@@ -123,17 +130,20 @@ def add_task():
     if task_title not in valid_tasks:
         return jsonify({"success": False, "message": "Invalid task title"}), 400
 
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute(
-        "INSERT INTO task_management (emp_id, employee_name, task_title, completed) VALUES (%s, %s, %s, %s)",
-        (emp_id, employee_name, task_title, completed),
-    )
-    conn.commit()
-    new_id = cursor.lastrowid
-    cursor.close()
-    conn.close()
-    return jsonify({"success": True, "id": new_id})
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT INTO task_management (emp_id, employee_name, task_title, completed) VALUES (%s, %s, %s, %s)",
+            (emp_id, employee_name, task_title, completed),
+        )
+        conn.commit()
+        new_id = cursor.lastrowid
+        cursor.close()
+        conn.close()
+        return jsonify({"success": True, "id": new_id})
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 500
 
 
 @app.route("/api/tasks/<int:task_id>", methods=["PATCH"])
@@ -142,25 +152,31 @@ def update_task(task_id):
     data = request.get_json(silent=True) or {}
     completed = str(data.get("completed")).lower() == "true"
 
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("UPDATE task_management SET completed = %s WHERE id = %s", (completed, task_id))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return jsonify({"success": True})
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("UPDATE task_management SET completed = %s WHERE id = %s", (completed, task_id))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 500
 
 
 @app.route("/api/tasks/<int:task_id>", methods=["DELETE"])
 @login_required
 def delete_task(task_id):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM task_management WHERE id = %s", (task_id,))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return jsonify({"success": True})
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM task_management WHERE id = %s", (task_id,))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 500
 
 
 if __name__ == "__main__":

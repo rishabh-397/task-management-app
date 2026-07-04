@@ -21,7 +21,7 @@ def get_connection():
         database=os.environ.get("DB_NAME", "task_management_db"),
         port=int(os.environ.get("DB_PORT", "3306")),
         cursorclass=pymysql.cursors.DictCursor,
-        ssl={"ssl": True}
+        ssl_disabled=True
     )
 
 

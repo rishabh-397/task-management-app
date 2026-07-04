@@ -1,18 +1,18 @@
 # 📋 Task Management App
 
-A full-stack **Task Management Application** built using **Flask**, **MySQL**, and **Vanilla JavaScript** that enables managers to securely assign, monitor, update, and manage employee tasks in real time.
+A **Task Management Application** built using **Flask**, **MySQL**, and **Vanilla JavaScript** that enables managers to securely assign, monitor, update, and manage employee tasks in real time.
 
 ## 🚀 Live Demo
 
-**Application:** https://task-management-app-1yzq.onrender.com/
+**Application:** https://task-management-app-production-16a9.up.railway.app
 
-> **Note:** Since the application is hosted on Render's free tier, the first request may take **30–50 seconds** while the server wakes up.
+> **Note:** Since the application is hosted on Railway's free tier, the server may take a moment to wake up after inactivity.
 
 ## 🔐 Demo Credentials
 
-| Username  | Password       |
-| --------- | -------------- |
-|' rishabh' |' rishabh@2026 |
+| Username | Password      |
+|----------|---------------|
+| rishabh  | rishabh@2026  |
 
 > Only **Manager** accounts are authorized to log in.
 
@@ -29,17 +29,17 @@ The **Task Management App** is a full-stack web application developed to simplif
 * 🔄 Toggle task status instantly
 * ❌ Delete tasks with a single click
 * 📊 View all tasks in a live table with status badges
-* ☁️ Cloud-hosted MySQL database using Aiven
-* 🌐 Deployed on Render for online accessibility
+* ☁️ Cloud-hosted MySQL database using Railway
+* 🌐 Deployed on Railway for online accessibility
 * 📱 Responsive and user-friendly interface
 
 ## 🛠️ Technology Stack
 
-**Frontend:** HTML5, CSS3, Vanilla JavaScript
-**Backend:** Python, Flask, Flask-CORS
-**Database:** MySQL (Aiven Cloud Database)
-**Authentication:** Werkzeug Password Hashing
-**Deployment:** Render
+**Frontend:** HTML5, CSS3, Vanilla JavaScript  
+**Backend:** Python, Flask  
+**Database:** MySQl WORKBENCH
+**Authentication:** Werkzeug Password Hashing  
+**Deployment:** Railway  
 
 ## 📂 Project Structure
 
@@ -47,14 +47,14 @@ The **Task Management App** is a full-stack web application developed to simplif
 task-management-app/
 ├── static/
 │   ├── style.css
-│   ├── script.js
-│   
+│   └── script.js
 ├── templates/
-│   └── login.html
-    └── dashboard.html
+│   ├── login.html
+│   └── dashboard.html
 ├── app.py
 ├── requirements.txt
 ├── schema.sql
+├── Procfile
 ├── README.md
 └── .gitignore
 ```
@@ -105,7 +105,7 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Visit **http://127.0.0.1:5000** in your browser and log in using the demo credentials.
+Visit **http://127.0.0.1:5000** in your browser and log in using the demo credentials above.
 
 ## 🗄️ Database Schema
 
@@ -114,7 +114,7 @@ Visit **http://127.0.0.1:5000** in your browser and log in using the demo creden
 Stores authenticated manager accounts.
 
 | Column     | Type                              |
-| ---------- | --------------------------------- |
+|------------|-----------------------------------|
 | id         | INT (Primary Key, Auto Increment) |
 | username   | VARCHAR(50), UNIQUE               |
 | password   | VARCHAR(255)                      |
@@ -126,7 +126,7 @@ Stores authenticated manager accounts.
 Stores employee task information.
 
 | Column        | Type                              |
-| ------------- | --------------------------------- |
+|---------------|-----------------------------------|
 | id            | INT (Primary Key, Auto Increment) |
 | emp_id        | VARCHAR(20)                       |
 | employee_name | VARCHAR(100)                      |
@@ -137,12 +137,12 @@ Stores employee task information.
 
 ## 📡 REST API Endpoints
 
-| Method | Endpoint          | Description                   |
-| ------ | ----------------- | ----------------------------- |
-| GET    | `/api/tasks`      | Retrieve all tasks            |
-| POST   | `/api/tasks`      | Create a new task             |
-| PATCH  | `/api/tasks/<id>` | Toggle task completion status |
-| DELETE | `/api/tasks/<id>` | Delete a task                 |
+| Method | Endpoint           | Description                   |
+|--------|--------------------|-------------------------------|
+| GET    | `/api/tasks`       | Retrieve all tasks            |
+| POST   | `/api/tasks`       | Create a new task             |
+| PATCH  | `/api/tasks/<id>`  | Toggle task completion status |
+| DELETE | `/api/tasks/<id>`  | Delete a task                 |
 
 ## 🔒 Authentication
 
@@ -150,33 +150,6 @@ User passwords are securely hashed using **Werkzeug** before being stored in the
 
 ## 🌐 Deployment
 
-The application is deployed on **Render**, while the MySQL database is hosted on **Aiven Cloud**, allowing secure access and persistent storage from anywhere.
+The application is deployed on **Railway**, with the MySQL database also hosted on **Railway**, ensuring seamless and reliable connectivity between the app and the database without any external connection issues.
 
-## 🚀 Future Enhancements
-
-* Employee login portal
-* Admin dashboard
-* Task priority management
-* Due dates and reminders
-* Email notifications
-* Search and filter functionality
-* Analytics dashboard
-* User profile management
-* Pagination
-* JWT-based authentication
-
-## 👨‍💻 Author
-
-**Rishabh Chaturvedi**
-
-GitHub: https://github.com/rishabh-397
-
-LinkedIn: https://www.linkedin.com/in/rishabh-chaturvedi-21212728a?utm_source=share_via&utm_content=profile&utm_medium=member_android
-
-## 📄 License
-
-This project is licensed under the **MIT License** and is available for educational and learning purposes. Contributions, suggestions, and improvements are always welcome.
-
-## ⭐ Support
-
-If you found this project helpful, please consider giving it a **⭐ Star** on GitHub. Your support motivates continued development and helps others discover the project.
+### Deployment Architecture write in more formal way d

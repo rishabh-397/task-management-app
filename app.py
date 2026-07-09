@@ -20,7 +20,7 @@ def get_connection():
     return pymysql.connect(
         host=os.environ.get("DB_HOST", "localhost"),
         user=os.environ.get("DB_USER", "root"),
-        password=os.environ.get("DB_PASSWORD", "@Rishu2005"),
+        password=os.environ.get("DB_PASSWORD", "your_mysql_password"),
         database=os.environ.get("DB_NAME", "task_management_db"),
         port=int(os.environ.get("DB_PORT", "3306")),
         cursorclass=pymysql.cursors.DictCursor,

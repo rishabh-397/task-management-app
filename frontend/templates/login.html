@@ -3,64 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <title>Manager Login | Task Management</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body class="login-body">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
 
-  <!-- Stars background -->
+[data-theme="dark"] { --bg1: #0d0d2b; --bg2: #1a1a4e; --card-bg: rgba(255,255,255,0.05); --card-border: rgba(255,255,255,0.1); --text: #ffffff; --text-secondary: #a0aec0; --input-bg: rgba(255,255,255,0.08); --input-border: rgba(255,255,255,0.15); --star-color: white; }
+[data-theme="light"] { --bg1: #3a4b8f; --bg2: #6f86d6; --card-bg: rgba(255,255,255,0.9); --card-border: rgba(255,255,255,0.5); --text: #1f2933; --text-secondary: #4b5563; --input-bg: #f9fafb; --input-border: #d1d5db; --star-color: #2b3a67; }
+[data-theme="purple"] { --bg1: #1a0533; --bg2: #4a1080; --card-bg: rgba(255,255,255,0.07); --card-border: rgba(255,255,255,0.15); --text: #ffffff; --text-secondary: #d8b4fe; --input-bg: rgba(255,255,255,0.1); --input-border: rgba(216,180,254,0.3); --star-color: #e9d5ff; }
+[data-theme="ocean"] { --bg1: #001f3f; --bg2: #0074cc; --card-bg: rgba(255,255,255,0.07); --card-border: rgba(255,255,255,0.15); --text: #ffffff; --text-secondary: #93c5fd; --input-bg: rgba(255,255,255,0.1); --input-border: rgba(147,197,253,0.3); --star-color: #bae6fd; }
+
+body { background: linear-gradient(135deg, var(--bg1), var(--bg2)); color: var(--text); min-height: 100vh; transition: background 0.5s, color 0.3s; }
+
+.stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+.star { position: absolute; border-radius: 50%; opacity: 0; animation: twinkle linear infinite; }
+@keyframes twinkle { 0% { opacity: 0; transform: translateY(0) scale(1); } 50% { opacity: 1; transform: translateY(-20px) scale(1.2); } 100% { opacity: 0; transform: translateY(-40px) scale(0.8); } }
+
+.theme-bar { position: fixed; top: 16px; right: 16px; z-index: 999; display: flex; gap: 8px; }
+.theme-btn { padding: 6px 12px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; font-size: 12px; color: white; backdrop-filter: blur(10px); transition: all 0.3s; font-weight: 600; }
+.theme-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+.theme-btn.dark { background: rgba(13,13,43,0.8); }
+.theme-btn.light { background: rgba(58,75,143,0.8); }
+.theme-btn.purple { background: rgba(74,16,128,0.8); }
+.theme-btn.ocean { background: rgba(0,116,204,0.8); }
+.theme-btn.active { border: 2px solid white; }
+
+@keyframes fadeSlideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.animate-in { animation: fadeSlideIn 0.6s ease forwards; }
+
+.login-wrapper { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+.login-card { position: relative; z-index: 1; background: var(--card-bg); backdrop-filter: blur(20px); padding: 40px 36px; border-radius: 16px; width: 380px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); border: 1px solid var(--card-border); text-align: center; }
+.login-card h1 { font-size: 24px; margin-bottom: 4px; color: var(--text); }
+.login-card .subtitle { color: var(--text-secondary); margin-bottom: 24px; font-size: 14px; }
+.login-card form { text-align: left; }
+.login-card label { display: block; font-size: 13px; margin: 12px 0 4px; color: var(--text-secondary); }
+.login-card input { width: 100%; padding: 10px 12px; border: 1px solid var(--input-border); border-radius: 8px; font-size: 14px; background: var(--input-bg); color: var(--text); transition: border 0.2s; }
+.login-card input:focus { outline: none; border-color: #6f86d6; }
+.login-btn { width: 100%; margin-top: 20px; padding: 12px; background: linear-gradient(135deg, #3a4b8f, #6f86d6); color: #fff; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+.login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(111,134,214,0.4); }
+.hint { margin-top: 16px; font-size: 12px; color: var(--text-secondary); }
+.alert.error { background: rgba(185,28,28,0.2); color: #fca5a5; padding: 10px; border-radius: 8px; font-size: 13px; margin-bottom: 10px; border: 1px solid rgba(185,28,28,0.3); }
+</style>
+</head>
+<body>
   <div class="stars" id="stars"></div>
 
-  <!-- Theme toggle -->
-  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
+  <div class="theme-bar">
+    <button class="theme-btn dark active" onclick="setTheme('dark', this)">🌑 Dark</button>
+    <button class="theme-btn light" onclick="setTheme('light', this)">☀️ Light</button>
+    <button class="theme-btn purple" onclick="setTheme('purple', this)">💜 Purple</button>
+    <button class="theme-btn ocean" onclick="setTheme('ocean', this)">🌊 Ocean</button>
+  </div>
 
-  <div class="login-card animate-in">
-    <h1>Task Management</h1>
-    <p class="subtitle">Manager Login</p>
-
-    {% if error %}
-      <div class="alert error">{{ error }}</div>
-    {% endif %}
-
-    <form method="POST" action="{{ url_for('login') }}">
-      <label for="username">Username</label>
-      <input type="text" id="username" name="username" placeholder="Enter manager username" required autofocus>
-
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" placeholder="Enter password" required>
-
-      <button type="submit" class="login-btn">Login</button>
-    </form>
-
-    <p class="hint">Only a manager account can access this dashboard.</p>
+  <div class="login-wrapper">
+    <div class="login-card animate-in">
+      <h1>Task Management</h1>
+      <p class="subtitle">Manager Login</p>
+      {% if error %}
+        <div class="alert error">{{ error }}</div>
+      {% endif %}
+      <form method="POST" action="{{ url_for('login') }}">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter manager username" required autofocus>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required>
+        <button type="submit" class="login-btn">Login</button>
+      </form>
+      <p class="hint">Only a manager account can access this dashboard.</p>
+    </div>
   </div>
 
   <script>
     // Generate stars
     const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < 150; i++) {
-      const star = document.createElement('div');
-      star.classList.add('star');
-      star.style.left = Math.random() * 100 + 'vw';
-      star.style.top = Math.random() * 100 + 'vh';
-      star.style.width = Math.random() * 3 + 1 + 'px';
-      star.style.height = star.style.width;
-      star.style.animationDuration = Math.random() * 3 + 2 + 's';
-      star.style.animationDelay = Math.random() * 5 + 's';
-      starsContainer.appendChild(star);
-    }
-
-    // Theme toggle
-    function toggleTheme() {
-      const html = document.documentElement;
-      const btn = document.getElementById('themeBtn');
-      if (html.getAttribute('data-theme') === 'dark') {
-        html.setAttribute('data-theme', 'light');
-        btn.textContent = '☀️ Light';
-      } else {
-        html.setAttribute('data-theme', 'dark');
-        btn.textContent = '🌙 Dark';
+    let stars = [];
+    function createStars(color) {
+      starsContainer.innerHTML = '';
+      stars = [];
+      for (let i = 0; i < 150; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.left = Math.random() * 100 + 'vw';
+        star.style.top = Math.random() * 100 + 'vh';
+        const size = Math.random() * 3 + 1 + 'px';
+        star.style.width = size;
+        star.style.height = size;
+        star.style.background = color;
+        star.style.animationDuration = Math.random() * 3 + 2 + 's';
+        star.style.animationDelay = Math.random() * 5 + 's';
+        starsContainer.appendChild(star);
+        stars.push(star);
       }
     }
+
+    const starColors = {
+      dark: 'white',
+      light: '#2b3a67',
+      purple: '#e9d5ff',
+      ocean: '#bae6fd'
+    };
+
+    function setTheme(theme, btn) {
+      document.documentElement.setAttribute('data-theme', theme);
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      createStars(starColors[theme]);
+    }
+
+    // Init stars
+    createStars('white');
   </script>
 </body>
 </html>

@@ -4,9 +4,9 @@ A full-stack **Task Management Application** built using **Flask**, **MySQL**, a
 
 ## 🚀 Live Demo
 
-**Application:** https://task-management-app-production-16a9.up.railway.app
+**Application:** https://task-management-app-eight-gilt.vercel.app
 
-> **Note:** Since the application is hosted on Railway's free tier, the server may take a few moments to wake up after a period of inactivity.
+>
 
 ## 🔐 Demo Credentials
 

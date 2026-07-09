@@ -230,3 +230,11 @@ th { color: var(--text-secondary); font-weight: 600; font-size: 12px; text-trans
 @media (max-width: 700px) {
   #task-form { grid-template-columns: 1fr; }
 }
+
+.form-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+.form-group { display: flex; flex-direction: column; flex: 1; min-width: 150px; }
+.form-group label { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+.form-group input, .form-group select { padding: 9px 10px; border: 1px solid var(--input-border); border-radius: 6px; font-size: 14px; background: var(--input-bg); color: var(--text); }
+.submit-group button { padding: 10px 20px; background: linear-gradient(135deg, #16a34a, #22c55e); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; transition: transform 0.2s; width: 100%; }
+.submit-group button:hover { transform: translateY(-2px); }
+@media (max-width: 700px) { .form-row { flex-direction: column; } }

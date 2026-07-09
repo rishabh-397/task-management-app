@@ -6,7 +6,11 @@ A full-stack **Task Management Application** built using **Flask**, **MySQL**, a
 
 **Application:** https://task-management-app-eight-gilt.vercel.app
 
+<<<<<<< HEAD
 >
+=======
+> 
+>>>>>>> 68dc002 (Fix form layout to single clean row)
 
 ## 🔐 Demo Credentials
 

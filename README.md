@@ -36,6 +36,7 @@ Password: `rishabh@2026`
 - **Deployment**: Railway (primary), Vercel (frontend alternative)
 
 ## 📂 Project Structure
+
 task-management-app/
 ├── frontend/
 │   ├── static/

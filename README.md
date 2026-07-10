@@ -38,13 +38,16 @@ Password: `rishabh@2026`
 ## 📂 Project Structure
 
 task-management-app/
+
 ├── frontend/
+
 │   ├── static/
 │   │   ├── style.css
 │   │   └── script.js
 │   └── templates/
 │       ├── login.html
 │       └── dashboard.html
+
 ├── database/
 │   └── schema.sql
 ├── app.py

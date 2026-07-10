@@ -8,7 +8,7 @@ A full-stack **Task Management Application** developed using **Flask**, **MySQL*
 
 **Application:** https://task-management-app-eight-gilt.vercel.app
 
-> **Note:** The frontend is hosted on Vercel, while the MySQL database is hosted on Railway. The initial request may take a few seconds to load.
+> **Note:** The frontend is hosted on Vercel, while the MySQL database is hosted on My SQL WorkBench. The initial request may take a few seconds to load.
 
 ---
 

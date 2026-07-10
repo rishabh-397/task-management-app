@@ -1,191 +1,138 @@
-# 📋 Task Management App
+📋 Task Management App
 
-A full-stack **Task Management Application** built using **Flask**, **MySQL**, and **Vanilla JavaScript** that enables managers to securely assign, monitor, update, and manage employee tasks in real time.
+A full-stack Task Management Application built using Flask, MySQL, and Vanilla JavaScript that enables managers to securely assign, monitor, update, and manage employee tasks in real time.
 
-## 🚀 Live Demo
+🚀 Live Demo
 
-**Application:** https://task-management-app-eight-gilt.vercel.app
+Application: https://task-management-app-eight-gilt.vercel.app
 
-<<<<<<< HEAD
->
-=======
-> 
->>>>>>> 68dc002 (Fix form layout to single clean row)
+🔐 Demo Credentials
+Username	Password
+rishabh	rishabh@2026
 
-## 🔐 Demo Credentials
+Only Manager accounts are authorized to log in.
 
-| Username | Password     |
-| -------- | ------------ |
-| rishabh  | rishabh@2026 |
+📖 Project Overview
 
-> Only **Manager** accounts are authorized to log in.
+The Task Management App is a full-stack web application designed to simplify task assignment and tracking within an organization. Managers can securely log in, assign tasks to employees, update task statuses, monitor ongoing work, and delete completed or unnecessary tasks. The application follows a RESTful architecture with a Flask backend, a MySQL database, and a responsive frontend developed using HTML, CSS, and Vanilla JavaScript. Passwords are securely stored using hashing to ensure user authentication remains protected.
 
-## 📖 Project Overview
-
-The **Task Management App** is a full-stack web application designed to simplify task assignment and tracking within an organization. Managers can securely log in, assign tasks to employees, update task statuses, monitor ongoing work, and delete completed or unnecessary tasks. All data is stored in a cloud-hosted MySQL database, ensuring reliable, secure, and real-time access. The application follows a RESTful architecture, combining a Flask backend with a responsive frontend built using HTML, CSS, and Vanilla JavaScript.
-
-## ✨ Features
-
-* 🔐 Secure manager authentication with hashed passwords
-* 👨‍💼 Manager-only access control
-* ➕ Assign tasks using Employee ID, Employee Name, and Task Title
-* ✅ Mark tasks as completed or pending
-* 🔄 Toggle task status instantly
-* ❌ Delete tasks with a single click
-* 📊 View all tasks in a live dashboard with status badges
-* ☁️ Cloud-hosted MySQL database 
-* 🌐 Fully deployed and accessible online via Railway
-* 📱 Responsive and user-friendly interface
-* 🌙 Dark and Light theme switcher
-* ⭐ Animated moving stars background
-
-## 🛠️ Technology Stack
-
-| Category       | Technologies                    |
-| -------------- | ------------------------------- |
-| Frontend       | HTML5, CSS3, Vanilla JavaScript |
-| Backend        | Python, Flask                   |
-| Database       | MySQL   |
-| Authentication | Werkzeug Password Hashing       |
-| Deployment     | Railway                         |
-
-## 📂 Project Structure
-
-```text
+✨ Features
+🔐 Secure manager authentication with hashed passwords
+👨‍💼 Manager-only access control
+➕ Assign employee tasks
+✏️ Update task details
+✅ Mark tasks as completed or pending
+🔄 Toggle task status instantly
+❌ Delete tasks with one click
+📊 Live task dashboard
+☁️ Cloud-hosted MySQL database
+🌐 Fully responsive interface
+🌙 Dark & Light theme support
+⭐ Animated moving stars background
+⚡ Fast RESTful API communication
+🛠️ Technology Stack
+Category	Technologies
+Frontend	HTML5, CSS3, Vanilla JavaScript
+Backend	Python, Flask
+Database	MySQL
+Authentication	Werkzeug Password Hashing
+API	REST API
+Frontend Hosting	Vercel
+Backend Hosting	Railway
+Version Control	Git & GitHub
+📂 Project Structure
 task-management-app/
+│
 ├── frontend/
 │   ├── static/
 │   │   ├── style.css
-│   │   └── script.js
+│   │   ├── script.js
+│   │   └── stars.js
+│   │
 │   └── templates/
 │       ├── login.html
 │       └── dashboard.html
+│
 ├── database/
 │   └── schema.sql
+│
 ├── app.py
 ├── requirements.txt
 ├── Procfile
 ├── README.md
 └── .gitignore
-```
-
-## ⚙️ Local Setup
-
-### Prerequisites
-
-* Python 3.8 or later
-* MySQL Server
-* Git
-
-### Clone the Repository
-
-```bash
+⚙️ Local Setup
+Prerequisites
+Python 3.8+
+MySQL Server
+Git
+Clone Repository
 git clone https://github.com/rishabh-397/task-management-app.git
 cd task-management-app
-```
-
-### Create the Database
-
-```bash
+Create Database
 mysql -u root -p < database/schema.sql
-```
+Configure Database
 
-### Configure Database Credentials
+Update your database credentials inside app.py or configure the following environment variables.
 
-Update the database password inside **app.py**:
-
-```python
-password=os.environ.get("DB_PASSWORD", "your_mysql_password"),
-```
-
-### Install Dependencies
-
-```bash
+DB_HOST
+DB_USER
+DB_PASSWORD
+DB_NAME
+Install Dependencies
 pip install -r requirements.txt
-```
-
-### Run the Application
-
-```bash
+Run the Project
 python app.py
-```
 
-Open your browser and visit:
+Open your browser:
 
-```
 http://127.0.0.1:5000
-```
 
-Log in using the demo credentials provided above.
+Login using the demo credentials.
 
-## 🗄️ Database Schema
+🗄️ Database Schema
+Login Table
+Column	Type
+id	INT (Primary Key)
+username	VARCHAR(50) UNIQUE
+password	VARCHAR(255)
+role	ENUM('manager','admin')
+created_at	TIMESTAMP
+Tasks Table
+Column	Type
+id	INT (Primary Key)
+emp_id	VARCHAR(20)
+employee_name	VARCHAR(100)
+task_title	VARCHAR(100)
+completed	BOOLEAN
+created_at	TIMESTAMP
+updated_at	TIMESTAMP
+📡 REST API Endpoints
+Method	Endpoint	Description
+GET	/api/tasks	Retrieve all tasks
+POST	/api/tasks	Create a new task
+PATCH	/api/tasks/<id>	Toggle task status
+DELETE	/api/tasks/<id>	Delete a task
+🔒 Authentication
 
-### Login Table
+The application uses Werkzeug Password Hashing to securely hash passwords before storing them in the database. Only authenticated Manager accounts can access the dashboard, ensuring secure role-based authorization.
 
-Stores authenticated manager accounts.
+🌐 Deployment
+Service	Platform
+Frontend	Vercel
+Backend	Railway
+Database	Railway MySQL
 
-| Column     | Type                              |
-| ---------- | --------------------------------- |
-| id         | INT (Primary Key, Auto Increment) |
-| username   | VARCHAR(50), UNIQUE               |
-| password   | VARCHAR(255)                      |
-| role       | ENUM('manager', 'admin')          |
-| created_at | TIMESTAMP                         |
+The frontend is deployed on Vercel, while the Flask backend and MySQL database are hosted on Railway, ensuring reliable performance and seamless communication between the client and server.
 
-### Task Management Table
+👨‍💻 Author
 
-Stores employee task details.
+Rishabh Chaturvedi
 
-| Column        | Type                              |
-| ------------- | --------------------------------- |
-| id            | INT (Primary Key, Auto Increment) |
-| emp_id        | VARCHAR(20)                       |
-| employee_name | VARCHAR(100)                      |
-| task_title    | VARCHAR(50)                       |
-| completed     | BOOLEAN                           |
-| created_at    | TIMESTAMP                         |
-| updated_at    | TIMESTAMP                         |
+GitHub: https://github.com/rishabh-397
 
-## 📡 REST API Endpoints
+LinkedIn: https://www.linkedin.com/in/rishabh-chaturvedi-21212728a
 
-| Method | Endpoint          | Description                   |
-| ------ | ----------------- | ----------------------------- |
-| GET    | `/api/tasks`      | Retrieve all tasks            |
-| POST   | `/api/tasks`      | Create a new task             |
-| PATCH  | `/api/tasks/<id>` | Toggle task completion status |
-| DELETE | `/api/tasks/<id>` | Delete a task                 |
+🤝 Contributing
 
-## 🔒 Authentication
-
-User passwords are securely hashed using **Werkzeug** before being stored in the database. Only users with the **Manager** role can access the application dashboard, ensuring secure role-based authentication and authorization.
-
-## 🌐 Deployment
-
-The application is deployed on **Railway**, with its MySQL database also hosted on **Railway**. This cloud-based deployment ensures seamless connectivity, reliable performance, and real-time data synchronization without requiring external database configuration.
-
-## 🚀 Future Enhancements
-
-* Employee login portal
-* Admin dashboard
-* Task priority management
-* Due dates and reminders
-* Email notifications
-* Search and filter functionality
-* Export tasks to PDF/CSV
-* JWT-based authentication
-
-## 👨‍💻 Author
-
-**Rishabh Chaturvedi**
-
-**GitHub:** https://github.com/rishabh-397
-
-**LinkedIn:** https://www.linkedin.com/in/rishabh-chaturvedi-21212728a
-
-## 📄 License
-
-This project is licensed under the **MIT License** and is intended for educational and learning purposes.
-
-## ⭐ Support
-
-If you found this project helpful, consider giving it a **⭐ Star** on GitHub. Your support is greatly appreciated!
+Contributions are welcome!
